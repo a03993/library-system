@@ -53,4 +53,13 @@ router.post("/addBook", async (req, res) => {
   }
 });
 
+router.get("/list", async (req, res) => {
+  try {
+    const books = await Book.find();
+    res.status(200).json(books);
+  } catch (error) {
+    res.status(500).send("Failed to fetch books");
+  }
+});
+
 module.exports = router;
