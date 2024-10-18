@@ -2,6 +2,8 @@ const router = require("express").Router();
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 
+console.log("PASSPORT_SECRET:", process.env.PASSPORT_SECRET);
+
 router.use((req, res, next) => {
   console.log("It's receiving a request at auth route");
   next();
@@ -23,6 +25,34 @@ router.post("/register", async (req, res) => {
   } catch (error) {
     console.error("Error saving user:", error);
     res.status(500).send("Failed to register the user...");
+  }
+});
+
+router.post("/login", async (req, res) => {
+  // check if the user already exists
+  let foundUser = await User.findOne({ email: req.body.email });
+  if (!foundUser) {
+    return res.status(401).send("cannot find the user, please check the email");
+  }
+
+  // check if the password is correct
+  try {
+    const isMatch = await foundUser.comparePassword(req.body.password);
+    if (isMatch) {
+      // create a token
+      const tokenObject = { _id: foundUser._id, email: foundUser.email };
+      const token = jwt.sign(tokenObject, process.env.PASSPORT_SECRET);
+      return res.status(200).send({
+        msg: "Successfully logged in!",
+        token: "JWT " + token,
+        user: foundUser,
+      });
+    } else {
+      return res.status(401).send("password is wrong");
+    }
+  } catch (err) {
+    console.log("Error login in: ", err);
+    return res.status(500).send("Failed to login...");
   }
 });
 
