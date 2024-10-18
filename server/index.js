@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 require("dotenv").config();
 const userRoute = require("./routes/userRoute");
+const bookRoute = require("./routes/bookRoute");
 
 mongoose
   .connect("mongodb://localhost:27017/library")
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/user", userRoute);
+app.use("/api/books", bookRoute);
 
 // test
 app.get("/", (req, res) => {
