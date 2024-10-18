@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
+const { registerValidation, loginValidation } = require("../validation");
 
 console.log("PASSPORT_SECRET:", process.env.PASSPORT_SECRET);
 
@@ -10,6 +11,10 @@ router.use((req, res, next) => {
 });
 
 router.post("/register", async (req, res) => {
+  // check the info for register
+  const { error } = registerValidation(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+
   // check if the user already exists
   const userExist = await User.findOne({ email: req.body.email });
   if (userExist) return res.status(400).send("User already exists");
@@ -29,6 +34,10 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
+  // check the info for login
+  const { error } = loginValidation(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+
   // check if the user already exists
   let foundUser = await User.findOne({ email: req.body.email });
   if (!foundUser) {
