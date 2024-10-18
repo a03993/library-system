@@ -2,10 +2,10 @@ import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 
-const Layout = () => {
+const Layout = ({ currentUser, setCurrentUser }) => {
   return (
     <>
-      <Header />
+      <Header currentUser={currentUser} setCurrentUser={setCurrentUser} />
       <Outlet />
       <Footer />
     </>
