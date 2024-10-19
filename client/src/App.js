@@ -4,6 +4,7 @@ import Layout from "./components/Layout";
 import HomePageComponent from "./components/HomePage";
 import RegisterComponent from "./components/Register";
 import LoginComponent from "./components/Login";
+import BookDetails from "./components/BookDetails";
 import UserService from "./services/userService";
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
               path="/login"
               element={<LoginComponent setCurrentUser={setCurrentUser} />}
             ></Route>
+            <Route path="/books/:id" element={<BookDetails />} />
           </Route>
         </Routes>
       </BrowserRouter>
