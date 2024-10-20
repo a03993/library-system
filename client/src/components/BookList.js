@@ -27,7 +27,7 @@ const BookList = ({ currentUser }) => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container">
       <SearchBar onSearch={handleSearch} />
 
       {!filteredBooks.length && (

@@ -6,7 +6,7 @@ const Layout = ({ currentUser, setCurrentUser }) => {
   return (
     <div className="d-flex flex-column min-vh-100">
       <Header currentUser={currentUser} setCurrentUser={setCurrentUser} />
-      <main className="flex-fill">
+      <main className="flex-fill mt-5 mb-5">
         <Outlet />
       </main>
       <Footer />

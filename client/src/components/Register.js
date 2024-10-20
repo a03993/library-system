@@ -50,7 +50,7 @@ const Register = () => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container">
       <h1 className="text-center mb-4">Register</h1>
       {message && <div className="alert alert-danger">{message}</div>}
       <form>

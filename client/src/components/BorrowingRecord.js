@@ -26,7 +26,7 @@ const BorrowingRecord = ({ currentUser }) => {
   }
 
   return (
-    <div className="container mt-5 mb-5">
+    <div className="container">
       <h2 className="text-center mb-4">Your Borrowing Records</h2>
       {records.length === 0 ? (
         <div className="alert alert-info" role="alert">

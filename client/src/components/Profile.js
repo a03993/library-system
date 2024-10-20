@@ -36,7 +36,7 @@ const Profile = ({ currentUser, setCurrentUser }) => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container">
       <h2 className="text-center mb-4">User Profile</h2>
       <div className="text-center">
         <p>Name: {currentUser.user.name}</p>

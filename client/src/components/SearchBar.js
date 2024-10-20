@@ -24,7 +24,7 @@ const SearchBar = ({ onSearch }) => {
   };
 
   return (
-    <div className="container mt-3">
+    <div className="container">
       <form onSubmit={handleSearch} className="d-flex align-items-center">
         <input
           type="text"

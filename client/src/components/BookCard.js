@@ -62,23 +62,22 @@ const BookCard = ({ book, currentUser }) => {
           <img
             src={book.imageLinks.smallThumbnail}
             alt={book.title}
-            className="mx-auto d-block border m-3"
+            className="mx-auto img-fluid d-block border m-3"
             style={{ height: "250px" }}
           />
-
           <div className="card-body d-flex flex-column">
             <h5 className="card-title">{book.title}</h5>
             <p className="card-text">{book.authors.join(", ")}</p>
-            <div className="mt-auto d-flex justify-content-between">
+            <div className="d-flex flex-wrap">
               <button
-                className="btn btn-outline-secondary"
+                className="btn btn-outline-secondary m-1"
                 onClick={handleAddToWishlist}
               >
                 Wishlist
               </button>
               <button
                 className={`btn ${
-                  !isReturned ? "btn-danger" : "btn-outline-secondary"
+                  !isReturned ? "btn-warning m-1" : "btn-outline-secondary m-1"
                 }`}
                 onClick={handleClickToBorrowOrReturn}
               >
@@ -88,8 +87,11 @@ const BookCard = ({ book, currentUser }) => {
                     : "Borrowed"
                   : "Borrow"}
               </button>
-              <Link className="btn btn-secondary" to={`/books/${book._id}`}>
-                View Book Details
+              <Link
+                className="btn btn-outline-info m-1"
+                to={`/books/${book._id}`}
+              >
+                Details
               </Link>
             </div>
           </div>

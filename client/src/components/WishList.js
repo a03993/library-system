@@ -45,7 +45,7 @@ const Wishlist = ({ currentUser }) => {
   }
 
   return (
-    <div className="container mt-5">
+    <div className="container">
       <h2 className="text-center mb-4">Your Wishlist</h2>
       {wishlist.length === 0 ? (
         <div className="alert alert-warning text-center">
