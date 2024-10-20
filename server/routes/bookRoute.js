@@ -55,10 +55,17 @@ router.post("/addBook", async (req, res) => {
 
 router.get("/list", async (req, res) => {
   try {
-    const books = await Book.find();
-    res.status(200).json(books);
+    const { searchedTitle } = req.query;
+    let query = {};
+    if (searchedTitle) {
+      query = {
+        title: { $regex: search, $options: "i" },
+      };
+    }
+    const books = await Book.find(query);
+    res.json(books);
   } catch (error) {
-    res.status(500).send("Failed to fetch books");
+    res.status(500).json({ message: "Error fetching books", error });
   }
 });
 
