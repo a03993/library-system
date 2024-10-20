@@ -4,11 +4,13 @@ import Footer from "./Footer";
 
 const Layout = ({ currentUser, setCurrentUser }) => {
   return (
-    <>
+    <div className="d-flex flex-column min-vh-100">
       <Header currentUser={currentUser} setCurrentUser={setCurrentUser} />
-      <Outlet />
+      <main className="flex-fill">
+        <Outlet />
+      </main>
       <Footer />
-    </>
+    </div>
   );
 };
 

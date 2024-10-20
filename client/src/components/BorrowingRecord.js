@@ -26,25 +26,50 @@ const BorrowingRecord = ({ currentUser }) => {
   }
 
   return (
-    <div>
-      <h2>Your Borrowing Records</h2>
+    <div className="container mt-5 mb-5">
+      <h2 className="text-center mb-4">Your Borrowing Records</h2>
       {records.length === 0 ? (
-        <p>No borrowing records found.</p>
+        <div className="alert alert-info" role="alert">
+          No borrowing records found.
+        </div>
       ) : (
-        <ul>
+        <ul className="list-unstyled">
           {records.map((record) => (
             <li key={record._id}>
-              <h3>{record.bookId.title}</h3>
-              <p>Author: {record.bookId.authors.join(", ")}</p>
-              <p>
-                Borrow Date: {new Date(record.borrowDate).toLocaleDateString()}
-              </p>
-              <Link to={`/books/${record.bookId._id}`}>
-                <img
-                  src={record.bookId.imageLinks.thumbnail}
-                  alt={record.bookId.title}
-                />
-              </Link>
+              <div className="card mb-2">
+                <div className="row g-10">
+                  <div className="col-md-2">
+                    <Link to={`/books/${record.bookId._id}`}>
+                      <img
+                        src={record.bookId.imageLinks.thumbnail}
+                        alt={record.bookId.title}
+                        className="img-fluid rounded-start"
+                      />
+                    </Link>
+                  </div>
+                  <div className="col-md-10">
+                    <div className="card-body">
+                      <h5 className="card-title">{record.bookId.title}</h5>
+                      <p className="card-text">
+                        <strong>Author:</strong>{" "}
+                        {record.bookId.authors.join(", ")}
+                      </p>
+                      <p className="card-text">
+                        <small className="text-muted">
+                          Borrow Date:{" "}
+                          {new Date(record.borrowDate).toLocaleDateString()}
+                        </small>
+                      </p>
+                      <Link
+                        to={`/books/${record.bookId._id}`}
+                        className="btn btn-primary"
+                      >
+                        View Book Details
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </li>
           ))}
         </ul>

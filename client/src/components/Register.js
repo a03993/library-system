@@ -29,8 +29,8 @@ const Register = () => {
     setMessage("");
   };
 
-  const handleRegister = () => {
-    // check password and confirm password
+  const handleRegister = (e) => {
+    e.preventDefault();
     if (password !== confirmPassword) {
       setMessage("Passwords do not match.");
       return;
@@ -43,53 +43,77 @@ const Register = () => {
         );
         navigate("/login");
       })
-      .catch((e) => {
-        setMessage(e.response.data);
+      .catch((err) => {
+        setMessage(err.response.data);
         console.log("message" + message);
       });
   };
 
   return (
-    <div>
-      <h1>Register</h1>
-      {message && <div>{message}</div>}
+    <div className="container mt-5">
+      <h1 className="text-center mb-4">Register</h1>
+      {message && <div className="alert alert-danger">{message}</div>}
       <form>
-        <input
-          type="text"
-          onChange={handleName}
-          placeholder="User name"
-          name="username"
-          required
-        />
-        <br />
-        <input
-          type="email"
-          onChange={handleEmail}
-          placeholder="Email"
-          name="email"
-          required
-        />
-        <br />
-        <input
-          type="password"
-          onChange={handlePassword}
-          name="password"
-          placeholder="Password"
-          required
-        />
-        <br />
-        <input
-          type="password"
-          onChange={handleConfirmPassword}
-          name="confirm_password"
-          placeholder="check again password"
-          required
-        />
-        <br />
+        <div className="mb-3">
+          <label htmlFor="username" className="form-label">
+            User Name
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            onChange={handleName}
+            placeholder="Enter your username"
+            name="username"
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label">
+            Email
+          </label>
+          <input
+            type="email"
+            className="form-control"
+            onChange={handleEmail}
+            placeholder="Enter your email"
+            name="email"
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">
+            Password
+          </label>
+          <input
+            type="password"
+            className="form-control"
+            onChange={handlePassword}
+            name="Enter your password"
+            placeholder="Password"
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="confirm_password" className="form-label">
+            Confirm Password
+          </label>
+          <input
+            type="password"
+            className="form-control"
+            onChange={handleConfirmPassword}
+            name="confirm_password"
+            placeholder="Check again your password"
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          onClick={handleRegister}
+          className="btn btn-primary w-100"
+        >
+          Submit to register
+        </button>
       </form>
-      <button type="submit" onClick={handleRegister}>
-        <span>Submit to register</span>
-      </button>
     </div>
   );
 };

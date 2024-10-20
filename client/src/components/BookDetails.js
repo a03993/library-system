@@ -21,20 +21,32 @@ const BookDetails = () => {
   }
 
   return (
-    <div className="book-details">
-      <img src={book.imageLinks.thumbnail} alt={book.title} />
-      <h1>{book.title}</h1>
-      <h2>{book.subtitle}</h2>
-      <p>{book.description}</p>
-      <p>
-        <strong>Author:</strong> {book.authors}
-      </p>
-      <p>
-        <strong>Publisher:</strong> {book.publisher}
-      </p>
-      <p>
-        <strong>Published Date:</strong> {book.publishedDate}
-      </p>
+    <div className="container mt-5 mb-5">
+      <div className="row ">
+        <div className="col-md-4">
+          <img
+            src={book.imageLinks.thumbnail}
+            alt={book.title}
+            className="img-fluid rounded"
+            style={{ width: "100%", height: "auto" }}
+          />
+        </div>
+        <div className="col-md-8">
+          <h1 className="mt-2">{book.title}</h1>
+          <h2 className="text-muted">{book.subtitle}</h2>
+          <p className="mt-3">{book.description}</p>
+          <p>
+            <strong>Author:</strong> {book.authors.join(", ")}
+          </p>
+          <p>
+            <strong>Publisher:</strong> {book.publisher}
+          </p>
+          <p>
+            <strong>Published Date:</strong>{" "}
+            {new Date(book.publishedDate).toLocaleDateString()}
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

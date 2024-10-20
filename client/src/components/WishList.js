@@ -45,20 +45,37 @@ const Wishlist = ({ currentUser }) => {
   }
 
   return (
-    <div>
-      <h2>Your Wishlist</h2>
+    <div className="container mt-5">
+      <h2 className="text-center mb-4">Your Wishlist</h2>
       {wishlist.length === 0 ? (
-        <p>Oops...Your wishlist is empty.</p>
+        <div className="alert alert-warning text-center">
+          Oops... Your wishlist is empty.
+        </div>
       ) : (
-        <ul>
+        <ul className="list-group">
           {wishlist.map((book) => (
-            <li key={book._id}>
-              <Link to={`/books/${book._id}`}>
-                <img src={book.imageLinks.smallThumbnail} alt={book.title} />
+            <li
+              key={book._id}
+              className="list-group-item d-flex align-items-center"
+            >
+              <Link to={`/books/${book._id}`} className="me-3">
+                <img
+                  src={book.imageLinks.smallThumbnail}
+                  alt={book.title}
+                  className="img-thumbnail"
+                  style={{ width: "60px" }}
+                />
               </Link>
-              <h3>{book.title}</h3>
-              <p>{book.authors.join(", ")}</p>
-              <button onClick={() => handleRemove(book._id)}>Remove</button>
+              <div className="flex-grow-1">
+                <h3 className="h6">{book.title}</h3>
+                <p className="mb-0">{book.authors.join(", ")}</p>
+              </div>
+              <button
+                className="btn btn-danger btn-sm"
+                onClick={() => handleRemove(book._id)}
+              >
+                Remove
+              </button>
             </li>
           ))}
         </ul>

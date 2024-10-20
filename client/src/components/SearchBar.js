@@ -24,20 +24,25 @@ const SearchBar = ({ onSearch }) => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSearch}>
+    <div className="container mt-3">
+      <form onSubmit={handleSearch} className="d-flex align-items-center">
         <input
           type="text"
+          className="form-control me-2"
           placeholder="Search by book title"
           value={searchTerm}
           onChange={handleInputChange}
         />
         {click && (
-          <button type="button" onClick={handleClear}>
+          <button
+            type="button"
+            className="btn btn-outline-secondary me-2"
+            onClick={handleClear}
+          >
             X
           </button>
         )}
-        <button type="submit" onClick={handleClick}>
+        <button type="submit" onClick={handleClick} className="btn btn-primary">
           Search
         </button>
       </form>

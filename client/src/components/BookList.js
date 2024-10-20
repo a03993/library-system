@@ -27,14 +27,20 @@ const BookList = ({ currentUser }) => {
   };
 
   return (
-    <div>
+    <div className="container mt-5">
       <SearchBar onSearch={handleSearch} />
+
       {!filteredBooks.length && (
-        <div>Can not find any books by "{filteredValue}"</div>
+        <div className="alert alert-warning text-center mt-3">
+          Cannot find any books by "<strong>{filteredValue}</strong>"
+        </div>
       )}
-      <div>
+
+      <div className="row mt-4">
         {filteredBooks.map((book) => (
-          <BookCard key={book._id} book={book} currentUser={currentUser} />
+          <div className="col-md-4 mb-4" key={book._id}>
+            <BookCard book={book} currentUser={currentUser} />
+          </div>
         ))}
       </div>
     </div>

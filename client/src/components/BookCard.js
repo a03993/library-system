@@ -46,14 +46,43 @@ const BookCard = ({ book, currentUser }) => {
   };
 
   return (
-    <div>
-      <Link to={`/books/${book._id}`}>
-        <img src={book.imageLinks.smallThumbnail} alt={book.title} />
-      </Link>
-      <h3>{book.title}</h3>
-      <p>{book.authors.join(", ")}</p>
-      <button onClick={handleAddToWishlist}>Add to WishList</button>
-      <button onClick={handleClickToBorrow}>Borrow</button>
+    <div className="container ">
+      <div className="row g-2">
+        <div className="card">
+          <Link to={`/books/${book._id}`}>
+            <img
+              src={book.imageLinks.smallThumbnail}
+              alt={book.title}
+              className="card-img-top"
+              style={{ height: "300px", objectFit: "cover" }}
+            />
+          </Link>
+          <div className="card-body d-flex flex-column">
+            <h5 className="card-title">{book.title}</h5>
+            <p className="card-text">{book.authors.join(", ")}</p>
+            <div className="mt-auto d-flex justify-content-between">
+              <button
+                className="btn btn-outline-secondary"
+                onClick={handleAddToWishlist}
+              >
+                Wishlist
+              </button>
+              <button
+                className="btn btn-outline-secondary"
+                onClick={handleClickToBorrow}
+              >
+                Borrow
+              </button>
+              <button
+                className="btn btn-secondary"
+                onClick={handleClickToBorrow}
+              >
+                View Book Details
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
