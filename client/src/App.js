@@ -4,7 +4,8 @@ import Layout from "./components/Layout";
 import HomePageComponent from "./components/HomePage";
 import RegisterComponent from "./components/Register";
 import LoginComponent from "./components/Login";
-import BookDetails from "./components/BookDetails";
+import BookDetailsComponent from "./components/BookDetails";
+import BorrowingRecordComponent from "./components/BorrowingRecord";
 import UserService from "./services/userService";
 
 function App() {
@@ -22,13 +23,20 @@ function App() {
               />
             }
           >
-            <Route index element={<HomePageComponent />}></Route>
+            <Route
+              index
+              element={<HomePageComponent currentUser={currentUser} />}
+            ></Route>
             <Route path="/register" element={<RegisterComponent />}></Route>
             <Route
               path="/login"
               element={<LoginComponent setCurrentUser={setCurrentUser} />}
             ></Route>
-            <Route path="/books/:id" element={<BookDetails />} />
+            <Route path="/books/:id" element={<BookDetailsComponent />} />
+            <Route
+              path="/borrowings/:userId"
+              element={<BorrowingRecordComponent currentUser={currentUser} />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>

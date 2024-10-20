@@ -3,7 +3,7 @@ import BookCard from "./BookCard";
 import SearchBar from "./SearchBar";
 import BookService from "../services/bookService";
 
-const BookList = () => {
+const BookList = ({ currentUser }) => {
   const [filteredBooks, setFilteredBooks] = useState([]);
   const [filteredValue, setFilteredValue] = useState("");
 
@@ -34,7 +34,7 @@ const BookList = () => {
       )}
       <div>
         {filteredBooks.map((book) => (
-          <BookCard key={book._id} book={book} />
+          <BookCard key={book._id} book={book} currentUser={currentUser} />
         ))}
       </div>
     </div>

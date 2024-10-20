@@ -11,7 +11,17 @@ class BookService {
   getBookDetail(id) {
     return axios.get(API_URL + "/" + id);
   }
+
+  borrowBook(userId, bookId) {
+    return axios.post(API_URL + "/borrow", {
+      userId,
+      bookId,
+    });
+  }
+
+  getBorrowingRecords(userId) {
+    return axios.get(API_URL + "/borrowings/" + userId);
+  }
 }
 
-const bookServiceInstance = new BookService();
-export default bookServiceInstance;
+export default new BookService();

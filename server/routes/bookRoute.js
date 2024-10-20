@@ -1,5 +1,7 @@
 const router = require("express").Router();
 const Book = require("../models/Book");
+const BorrowingRecord = require("../models/BorrowingRecord");
+const User = require("../models/User");
 const { addBookValidation } = require("../validation");
 
 router.use((req, res, next) => {
@@ -59,7 +61,7 @@ router.get("/list", async (req, res) => {
     let query = {};
     if (searchedTitle) {
       query = {
-        title: { $regex: search, $options: "i" },
+        title: { $regex: searchedTitle, $options: "i" },
       };
     }
     const books = await Book.find(query);
@@ -79,6 +81,45 @@ router.get("/:id", async (req, res) => {
   } catch (error) {
     console.error("Error fetching book:", error);
     res.status(500).send("Failed to fetch book details");
+  }
+});
+
+router.post("/borrow", async (req, res) => {
+  const { userId, bookId } = req.body;
+
+  // Check if user and book exist
+  const user = await User.findById(userId);
+  const book = await Book.findById(bookId);
+
+  if (!user || !book) {
+    return res.status(404).send("User or book not found.");
+  }
+
+  // Create borrowing record
+  const newBorrowingRecord = new BorrowingRecord({
+    userId,
+    bookId,
+  });
+
+  try {
+    await newBorrowingRecord.save();
+    res.status(201).json(newBorrowingRecord);
+  } catch (error) {
+    console.error("Error borrowing book:", error);
+    res.status(500).send("Failed to borrow book.");
+  }
+});
+
+router.get("/borrowings/:userId", async (req, res) => {
+  try {
+    const records = await BorrowingRecord.find({
+      userId: req.params.userId,
+    }).populate("bookId");
+
+    res.status(200).json(records);
+  } catch (error) {
+    console.error("Error fetching borrowing records:", error);
+    res.status(500).send("Failed to fetch borrowing records.");
   }
 });
 
