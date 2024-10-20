@@ -43,6 +43,7 @@ const addBookValidation = (data) => {
       })
       .required(),
     language: joi.string(),
+    status: joi.object({ isReturned: joi.boolean(), borrower: joi.string() }),
   });
   return schema.validate(data);
 };

@@ -19,6 +19,13 @@ class BookService {
     });
   }
 
+  returnBook(userId, bookId) {
+    return axios.post(API_URL + "/return", {
+      userId,
+      bookId,
+    });
+  }
+
   getBorrowingRecords(userId) {
     return axios.get(API_URL + "/borrowings/" + userId);
   }

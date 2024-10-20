@@ -46,6 +46,14 @@ const BookSchema = new Schema({
     type: String,
     trim: true,
   },
+  status: {
+    isReturned: { type: Boolean, default: true },
+    borrower: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
+    },
+  },
 });
 
 const Book = mongoose.model("Book", BookSchema);

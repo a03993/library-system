@@ -87,21 +87,62 @@ router.post("/borrow", async (req, res) => {
   const user = await User.findById(userId);
   const book = await Book.findById(bookId);
 
-  if (!user || !book) {
-    return res.status(404).send("User or book not found.");
-  }
-
-  const newBorrowingRecord = new BorrowingRecord({
-    userId,
-    bookId,
-  });
-
   try {
+    if (!user || !book) {
+      return res.status(404).send("User or book not found.");
+    }
+
+    if (!book.status.isReturned) {
+      return res.status(404).send("The book is already borrowed.");
+    }
+
+    const newBorrowingRecord = new BorrowingRecord({
+      userId,
+      bookId,
+    });
     await newBorrowingRecord.save();
+
+    book.status.isReturned = false;
+    book.status.borrower = userId;
+    await book.save();
+
     res.status(201).json(newBorrowingRecord);
   } catch (error) {
     console.error("Error borrowing book:", error);
     res.status(500).send("Failed to borrow book.");
+  }
+});
+
+router.post("/return", async (req, res) => {
+  const { userId, bookId } = req.body;
+
+  try {
+    const user = await User.findById(userId);
+    const book = await Book.findById(bookId);
+
+    if (!user || !book) {
+      return res.status(404).send("User or book not found.");
+    }
+
+    const record = await BorrowingRecord.findOne({ userId, bookId });
+    if (!record) {
+      return res.status(404).send("Borrowing record not found.");
+    }
+
+    if (record.userId.toString() !== userId) {
+      return res
+        .status(403)
+        .send("You cannot return a book you did not borrow.");
+    }
+
+    book.status.isReturned = true;
+    book.status.borrower = null;
+    await book.save();
+
+    res.status(200).send("Book returned successfully.");
+  } catch (error) {
+    console.error("Error returning book:", error);
+    res.status(500).send("Failed to return book.");
   }
 });
 

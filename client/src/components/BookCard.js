@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import BookService from "../services/bookService";
 import UserService from "../services/userService";
 
 const BookCard = ({ book, currentUser }) => {
+  const [isReturned, setIsReturned] = useState(book.status.isReturned);
+  const [borrower, setBorrower] = useState(book.status.borrower);
+
   const handleAddToWishlist = async () => {
     if (!currentUser) {
       return window.alert("Please login first!");
@@ -16,32 +19,39 @@ const BookCard = ({ book, currentUser }) => {
       );
       window.alert(response.data.msg);
     } catch (error) {
-      if (error.response && error.response.status === 400) {
-        window.alert("This book is already in your wishlist!");
-      } else {
-        console.error("Error adding to wishlist:", error);
-        window.alert("Failed to add to wishlist. Please try again.");
-      }
+      window.alert("Failed to add to wishlist. Please try again.");
     }
   };
 
-  const handleClickToBorrow = async () => {
+  const handleClickToBorrowOrReturn = async () => {
     if (!currentUser) {
-      window.alert("Please login first!");
+      return window.alert("Please login first!");
     }
 
     try {
-      const response = await BookService.borrowBook(
-        currentUser.user._id,
-        book._id
-      );
-
-      if (response.status === 201) {
-        window.alert("Book borrowed successfully!");
+      if (!isReturned) {
+        const response = await BookService.returnBook(
+          currentUser.user._id,
+          book._id
+        );
+        if (response.status === 200) {
+          window.alert("Book returned successfully!");
+          setIsReturned(true);
+          setBorrower(null);
+        }
+      } else {
+        const response = await BookService.borrowBook(
+          currentUser.user._id,
+          book._id
+        );
+        if (response.status === 201) {
+          window.alert("Book borrowed successfully!");
+          setIsReturned(false);
+          setBorrower(currentUser.user._id);
+        }
       }
     } catch (error) {
-      console.error("Error borrowing book:", error);
-      window.alert("Failed to borrow book. Please try again.");
+      window.alert("Failed to borrow or return book. Please try again.");
     }
   };
 
@@ -67,10 +77,16 @@ const BookCard = ({ book, currentUser }) => {
                 Wishlist
               </button>
               <button
-                className="btn btn-outline-secondary"
-                onClick={handleClickToBorrow}
+                className={`btn ${
+                  !isReturned ? "btn-danger" : "btn-outline-secondary"
+                }`}
+                onClick={handleClickToBorrowOrReturn}
               >
-                Borrow
+                {!isReturned
+                  ? currentUser?.user._id === borrower
+                    ? "Return"
+                    : "Borrowed"
+                  : "Borrow"}
               </button>
               <Link className="btn btn-secondary" to={`/books/${book._id}`}>
                 View Book Details
