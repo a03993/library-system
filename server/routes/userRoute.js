@@ -107,4 +107,28 @@ router.get("/wishlist/:userId", async (req, res) => {
   }
 });
 
+router.post("/wishlist/remove", async (req, res) => {
+  const { userId, bookId } = req.body;
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $pull: { wishlist: bookId } },
+      { new: true }
+    ).populate("wishlist");
+
+    if (!updatedUser) {
+      return res.status(404).send("User not found");
+    }
+
+    res.status(200).send({
+      msg: "Book removed from wishlist!",
+      wishlist: updatedUser.wishlist,
+    });
+  } catch (error) {
+    console.error("Error removing from wishlist:", error);
+    res.status(500).send("Failed to remove from wishlist");
+  }
+});
+
 module.exports = router;

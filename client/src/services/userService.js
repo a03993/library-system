@@ -29,6 +29,10 @@ class UserService {
   getWishlist(userId) {
     return axios.get(API_URL + "/wishlist/" + userId);
   }
+
+  removeBookFromWishlist(userId, bookId) {
+    return axios.post(API_URL + "/wishlist/remove", { userId, bookId });
+  }
 }
 
 export default new UserService();

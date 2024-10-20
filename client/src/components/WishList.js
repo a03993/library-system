@@ -22,6 +22,20 @@ const Wishlist = ({ currentUser }) => {
     }
   }, [currentUser]);
 
+  const handleRemove = async (bookId) => {
+    try {
+      const response = await UserService.removeBookFromWishlist(
+        currentUser.user._id,
+        bookId
+      );
+      setWishlist(response.data.wishlist); // 更新願望清單
+      window.alert("Book removed from wishlist!");
+    } catch (err) {
+      console.error("Error removing book from wishlist:", err);
+      window.alert("Failed to remove book. Please try again.");
+    }
+  };
+
   if (!currentUser) {
     return <div>Please log in to view your wishlist.</div>;
   }
@@ -44,6 +58,7 @@ const Wishlist = ({ currentUser }) => {
               </Link>
               <h3>{book.title}</h3>
               <p>{book.authors.join(", ")}</p>
+              <button onClick={() => handleRemove(book._id)}>Remove</button>
             </li>
           ))}
         </ul>
