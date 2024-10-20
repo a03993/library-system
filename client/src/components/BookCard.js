@@ -46,17 +46,16 @@ const BookCard = ({ book, currentUser }) => {
   };
 
   return (
-    <div className="container ">
-      <div className="row g-2">
+    <div className="container">
+      <div className="row g-3">
         <div className="card">
-          <Link to={`/books/${book._id}`}>
-            <img
-              src={book.imageLinks.smallThumbnail}
-              alt={book.title}
-              className="card-img-top"
-              style={{ height: "300px", objectFit: "cover" }}
-            />
-          </Link>
+          <img
+            src={book.imageLinks.smallThumbnail}
+            alt={book.title}
+            className="mx-auto d-block border m-3"
+            style={{ height: "250px" }}
+          />
+
           <div className="card-body d-flex flex-column">
             <h5 className="card-title">{book.title}</h5>
             <p className="card-text">{book.authors.join(", ")}</p>
@@ -73,12 +72,9 @@ const BookCard = ({ book, currentUser }) => {
               >
                 Borrow
               </button>
-              <button
-                className="btn btn-secondary"
-                onClick={handleClickToBorrow}
-              >
+              <Link className="btn btn-secondary" to={`/books/${book._id}`}>
                 View Book Details
-              </button>
+              </Link>
             </div>
           </div>
         </div>

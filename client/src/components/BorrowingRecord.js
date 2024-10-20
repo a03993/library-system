@@ -43,7 +43,7 @@ const BorrowingRecord = ({ currentUser }) => {
                       <img
                         src={record.bookId.imageLinks.thumbnail}
                         alt={record.bookId.title}
-                        className="img-fluid rounded-start"
+                        className="mx-auto d-block border m-3"
                       />
                     </Link>
                   </div>
