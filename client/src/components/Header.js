@@ -9,7 +9,6 @@ const Header = ({ currentUser, setCurrentUser }) => {
       "Logout successful! You will now be redirected to the homepage..."
     );
     setCurrentUser(null);
-    console.log(currentUser);
   };
   return (
     <header>
@@ -52,6 +51,11 @@ const Header = ({ currentUser, setCurrentUser }) => {
               )}
               {currentUser && (
                 <>
+                  <li className="nav-item">
+                    <Link className="nav-link" to={"/profile"}>
+                      Profile
+                    </Link>
+                  </li>
                   <li className="nav-item">
                     <Link
                       className="nav-link"

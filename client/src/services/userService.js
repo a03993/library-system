@@ -33,6 +33,14 @@ class UserService {
   removeBookFromWishlist(userId, bookId) {
     return axios.post(API_URL + "/wishlist/remove", { userId, bookId });
   }
+
+  changePassword(userId, currentPassword, newPassword) {
+    return axios.post(API_URL + "/change-password", {
+      userId,
+      currentPassword,
+      newPassword,
+    });
+  }
 }
 
 export default new UserService();

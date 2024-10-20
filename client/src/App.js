@@ -7,6 +7,7 @@ import LoginComponent from "./components/Login";
 import BookDetailsComponent from "./components/BookDetails";
 import BorrowingRecordComponent from "./components/BorrowingRecord";
 import WishListComponent from "./components/WishList";
+import ProfileComponent from "./components/Profile";
 import UserService from "./services/userService";
 
 function App() {
@@ -41,6 +42,15 @@ function App() {
             <Route
               path="/wishlist/:userId"
               element={<WishListComponent currentUser={currentUser} />}
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProfileComponent
+                  currentUser={currentUser}
+                  setCurrentUser={setCurrentUser}
+                />
+              }
             />
           </Route>
         </Routes>

@@ -124,4 +124,28 @@ router.post("/wishlist/remove", async (req, res) => {
   }
 });
 
+router.post("/change-password", async (req, res) => {
+  const { userId, currentPassword, newPassword } = req.body;
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    const isMatch = await user.comparePassword(currentPassword);
+    if (!isMatch) {
+      return res.status(401).send("Current password is incorrect");
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    res.status(200).send("Password changed successfully");
+  } catch (error) {
+    console.error("Error changing password:", error);
+    res.status(500).send("Failed to change password");
+  }
+});
+
 module.exports = router;
