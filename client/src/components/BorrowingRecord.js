@@ -27,7 +27,7 @@ const BorrowingRecord = ({ currentUser }) => {
 
   return (
     <div>
-      <h2>Borrowing Records</h2>
+      <h2>Your Borrowing Records</h2>
       {records.length === 0 ? (
         <p>No borrowing records found.</p>
       ) : (

@@ -28,7 +28,7 @@ const Wishlist = ({ currentUser }) => {
         currentUser.user._id,
         bookId
       );
-      setWishlist(response.data.wishlist); // 更新願望清單
+      setWishlist(response.data.wishlist);
       window.alert("Book removed from wishlist!");
     } catch (err) {
       console.error("Error removing book from wishlist:", err);
@@ -48,7 +48,7 @@ const Wishlist = ({ currentUser }) => {
     <div>
       <h2>Your Wishlist</h2>
       {wishlist.length === 0 ? (
-        <p>Your wishlist is empty.</p>
+        <p>Oops...Your wishlist is empty.</p>
       ) : (
         <ul>
           {wishlist.map((book) => (

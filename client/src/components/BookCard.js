@@ -6,7 +6,7 @@ import UserService from "../services/userService";
 const BookCard = ({ book, currentUser }) => {
   const handleAddToWishlist = async () => {
     if (!currentUser) {
-      return window.alert("Please log in");
+      return window.alert("Please login first!");
     }
 
     try {
@@ -14,10 +14,10 @@ const BookCard = ({ book, currentUser }) => {
         currentUser.user._id,
         book._id
       );
-      window.alert(response.data.msg); // 顯示成功消息
+      window.alert(response.data.msg);
     } catch (error) {
       if (error.response && error.response.status === 400) {
-        window.alert("This book is already in your wishlist");
+        window.alert("This book is already in your wishlist!");
       } else {
         console.error("Error adding to wishlist:", error);
         window.alert("Failed to add to wishlist. Please try again.");
@@ -27,8 +27,9 @@ const BookCard = ({ book, currentUser }) => {
 
   const handleClickToBorrow = async () => {
     if (!currentUser) {
-      window.alert("Please log in");
+      window.alert("Please login first!");
     }
+
     try {
       const response = await BookService.borrowBook(
         currentUser.user._id,
@@ -49,7 +50,6 @@ const BookCard = ({ book, currentUser }) => {
       <Link to={`/books/${book._id}`}>
         <img src={book.imageLinks.smallThumbnail} alt={book.title} />
       </Link>
-
       <h3>{book.title}</h3>
       <p>{book.authors.join(", ")}</p>
       <button onClick={handleAddToWishlist}>Add to WishList</button>

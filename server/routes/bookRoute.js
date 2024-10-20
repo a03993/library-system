@@ -10,11 +10,9 @@ router.use((req, res, next) => {
 });
 
 router.post("/addBook", async (req, res) => {
-  // check the info for register
   const { error } = addBookValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  // check for existing book by industryIdentifiers
   const existingBook = await Book.findOne({
     industryIdentifiers: req.body.industryIdentifiers,
   });
@@ -23,7 +21,6 @@ router.post("/addBook", async (req, res) => {
     return res.status(400).send("This book already exists.");
   }
 
-  // create a new book
   let {
     title,
     subtitle,
@@ -87,7 +84,6 @@ router.get("/:id", async (req, res) => {
 router.post("/borrow", async (req, res) => {
   const { userId, bookId } = req.body;
 
-  // Check if user and book exist
   const user = await User.findById(userId);
   const book = await Book.findById(bookId);
 
@@ -95,7 +91,6 @@ router.post("/borrow", async (req, res) => {
     return res.status(404).send("User or book not found.");
   }
 
-  // Create borrowing record
   const newBorrowingRecord = new BorrowingRecord({
     userId,
     bookId,

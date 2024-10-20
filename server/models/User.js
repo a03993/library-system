@@ -20,21 +20,20 @@ const UserSchema = new Schema({
     required: [true, "Password is required"],
     minlength: [6, "Password must be at least 6 characters"],
   },
-  resetPasswordToken: String, // for password reset functionality
+  resetPasswordToken: String,
   resetPasswordExpires: Date,
   wishlist: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Book",
     },
-  ], // Array of books the user has added to their wishlist
+  ],
   createdAt: {
     type: Date,
     default: Date.now,
   },
 });
 
-// Method to compare password
 UserSchema.methods.comparePassword = async function (enteredPassword) {
   try {
     return await bcrypt.compare(enteredPassword, this.password);
@@ -43,7 +42,6 @@ UserSchema.methods.comparePassword = async function (enteredPassword) {
   }
 };
 
-// Pre-save middleware to hash passwords before saving
 UserSchema.pre("save", async function (next) {
   const user = this;
   if (user.isNew || user.isModified("password")) {
@@ -53,6 +51,5 @@ UserSchema.pre("save", async function (next) {
   next();
 });
 
-// User model
 const User = mongoose.model("User", UserSchema);
 module.exports = User;
