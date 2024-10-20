@@ -9,14 +9,25 @@ class UserService {
       password,
     });
   }
+
   getCurrentUser() {
     return JSON.parse(localStorage.getItem("user"));
   }
+
   login(email, password) {
     return axios.post(API_URL + "/login", { email, password });
   }
+
   logout() {
     localStorage.removeItem("user");
+  }
+
+  addToWishlist(userId, bookId) {
+    return axios.post(API_URL + "/wishlist/add", { userId, bookId });
+  }
+
+  getWishlist(userId) {
+    return axios.get(API_URL + "/wishlist/" + userId);
   }
 }
 

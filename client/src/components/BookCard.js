@@ -1,9 +1,31 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import BookService from "../services/bookService";
+import UserService from "../services/userService";
 
 const BookCard = ({ book, currentUser }) => {
-  const handleClick = async () => {
+  const handleAddToWishlist = async () => {
+    if (!currentUser) {
+      return window.alert("Please log in");
+    }
+
+    try {
+      const response = await UserService.addToWishlist(
+        currentUser.user._id,
+        book._id
+      );
+      window.alert(response.data.msg); // 顯示成功消息
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        window.alert("This book is already in your wishlist");
+      } else {
+        console.error("Error adding to wishlist:", error);
+        window.alert("Failed to add to wishlist. Please try again.");
+      }
+    }
+  };
+
+  const handleClickToBorrow = async () => {
     if (!currentUser) {
       window.alert("Please log in");
     }
@@ -30,8 +52,8 @@ const BookCard = ({ book, currentUser }) => {
 
       <h3>{book.title}</h3>
       <p>{book.authors.join(", ")}</p>
-      <button>Add to WishList</button>
-      <button onClick={handleClick}>Borrow</button>
+      <button onClick={handleAddToWishlist}>Add to WishList</button>
+      <button onClick={handleClickToBorrow}>Borrow</button>
     </div>
   );
 };

@@ -6,6 +6,7 @@ import RegisterComponent from "./components/Register";
 import LoginComponent from "./components/Login";
 import BookDetailsComponent from "./components/BookDetails";
 import BorrowingRecordComponent from "./components/BorrowingRecord";
+import WishListComponent from "./components/WishList";
 import UserService from "./services/userService";
 
 function App() {
@@ -36,6 +37,10 @@ function App() {
             <Route
               path="/borrowings/:userId"
               element={<BorrowingRecordComponent currentUser={currentUser} />}
+            />
+            <Route
+              path="/wishlist/:userId"
+              element={<WishListComponent currentUser={currentUser} />}
             />
           </Route>
         </Routes>

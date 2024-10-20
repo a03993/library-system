@@ -17,6 +17,7 @@ const Header = ({ currentUser, setCurrentUser }) => {
         <Link to="/">Home</Link>
         {!currentUser && <Link to="register">Register</Link>}
         {!currentUser && <Link to="login">Login</Link>}
+        {currentUser && <Link to="/wishlist/:userId">Wishlist</Link>}
         {currentUser && <Link to="/borrowings/:userId">Borrowing Record</Link>}
         {currentUser && (
           <Link onClick={handleLogout} to="/">

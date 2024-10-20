@@ -65,4 +65,46 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.post("/wishlist/add", async (req, res) => {
+  const { userId, bookId } = req.body;
+
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    if (user.wishlist.includes(bookId)) {
+      return res.status(400).send("Book is already in your wishlist");
+    }
+
+    user.wishlist.push(bookId);
+    await user.save();
+
+    res.status(200).send({
+      msg: "Book added to wishlist!",
+      wishlist: user.wishlist,
+    });
+  } catch (error) {
+    console.error("Error adding to wishlist:", error);
+    res.status(500).send("Failed to add to wishlist");
+  }
+});
+
+router.get("/wishlist/:userId", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId).populate("wishlist");
+
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    res.status(200).send({ wishlist: user.wishlist });
+  } catch (error) {
+    console.error("Error fetching wishlist:", error);
+    res.status(500).send("Failed to fetch wishlist");
+  }
+});
+
 module.exports = router;
