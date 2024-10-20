@@ -7,7 +7,7 @@ const userRoute = require("./routes/userRoute");
 const bookRoute = require("./routes/bookRoute");
 
 mongoose
-  .connect("mongodb://localhost:27017/library")
+  .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("Connected to the database");
   })
