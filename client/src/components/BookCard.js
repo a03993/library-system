@@ -77,7 +77,11 @@ const BookCard = ({ book, currentUser }) => {
               </button>
               <button
                 className={`btn ${
-                  !isReturned ? "btn-warning m-1" : "btn-outline-secondary m-1"
+                  !isReturned
+                    ? currentUser?.user._id === borrower
+                      ? "btn-warning m-1"
+                      : "btn-secondary m-1 disabled"
+                    : "btn-outline-secondary m-1"
                 }`}
                 onClick={handleClickToBorrowOrReturn}
               >
