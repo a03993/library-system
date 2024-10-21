@@ -37,14 +37,14 @@ Welcome to the Library Borrowing System! This project is designed to help users 
    ```bash
    cd mingliu-library-system/server
    ```
-3. **install dependencies**:
+3. **Set up your environment variables**:
+   ```bash
+   export MONGO_URI=mongodb+srv://a03993a:zZt9SZm9UnOwyzTN@library.cbkti.mongodb.net/
+   export PASSPORT_SECRET=library_system_by_tina
+   ```
+4. **install dependencies**:
    ```bash
    npm install
-   ```
-4. **Set up your environment variables**:
-   ```bash
-   MONGO_URI=mongodb+srv://a03993a:zZt9SZm9UnOwyzTN@library.cbkti.mongodb.net/
-   PASSPORT_SECRET=library_system_by_tina
    ```
 5. **Run the server**:
    ```bash
@@ -73,57 +73,61 @@ Welcome to the Library Borrowing System! This project is designed to help users 
 
 ### User Routes
 
-1. **User Registration**  
-   - **Method**: `POST /api/user/register`  
-   - **Description**: Registers a new user.  
-   - **Request Body**:  
+1. **User Registration**
+   - **Method**: `POST /api/user/register`
+   - **Description**: Registers a new user.
+   - **Request Body**:
      ```json
      { "name": "string", "email": "string", "password": "string" }
      ```
-     
-2. **User Login**  
-   - **Method**: `POST /api/user/login`  
-   - **Description**: Logs in a user and returns a JWT.  
-   - **Request Body**:  
+2. **User Login**
+   - **Method**: `POST /api/user/login`
+   - **Description**: Logs in a user and returns a JWT.
+   - **Request Body**:
      ```json
      { "email": "string", "password": "string" }
      ```
-     
-3. **Add to Wishlist**  
-   - **Method**: `POST /api/user/wishlist/add`  
-   - **Description**: Adds a book to the user's wishlist.  
-   - **Request Body**:  
+3. **Add to Wishlist**
+   - **Method**: `POST /api/user/wishlist/add`
+   - **Description**: Adds a book to the user's wishlist.
+   - **Request Body**:
      ```json
      { "userId": "ObjectId", "bookId": "ObjectId" }
      ```
-     
-4. **Remove from Wishlist**  
-   - **Method**: `POST /api/user/wishlist/remove`  
-   - **Description**: Removes a book from the user's wishlist.  
-   - **Request Body**:  
+4. **Remove from Wishlist**
+
+   - **Method**: `POST /api/user/wishlist/remove`
+   - **Description**: Removes a book from the user's wishlist.
+   - **Request Body**:
      ```json
      { "userId": "ObjectId", "bookId": "ObjectId" }
      ```
 
-5. **Get User Wishlist**  
-   - **Method**: `GET /api/user/wishlist/:userId`  
-   - **Description**: Fetches the wishlist for the specified user.  
+5. **Get User Wishlist**
+
+   - **Method**: `GET /api/user/wishlist/:userId`
+   - **Description**: Fetches the wishlist for the specified user.
    - **Params**: `userId` (as part of URL path)
 
-6. **Change Password**  
-   - **Method**: `POST /api/user/change-password`  
-   - **Description**: Changes the user password.  
-   - **Request Body**:  
+6. **Change Password**
+   - **Method**: `POST /api/user/change-password`
+   - **Description**: Changes the user password.
+   - **Request Body**:
      ```json
-     { "userId": "ObjectId", "currentPassword": "string", "newPassword": "string" }
+     {
+       "userId": "ObjectId",
+       "currentPassword": "string",
+       "newPassword": "string"
+     }
      ```
 
 ### Book Routes
 
-1. **Add Book**  
-   - **Method**: `POST /api/books/addBook`  
-   - **Description**: Adds a new book to the library.  
-   - **Request Body**: Book details including title, authors, publisher, etc.  
+1. **Add Book**
+
+   - **Method**: `POST /api/books/addBook`
+   - **Description**: Adds a new book to the library.
+   - **Request Body**: Book details including title, authors, publisher, etc.
      ```json
      {
        "title": "string",
@@ -138,40 +142,45 @@ Welcome to the Library Borrowing System! This project is designed to help users 
      }
      ```
 
-2. **List Books**  
-   - **Method**: `GET /api/books/list`  
-   - **Description**: Retrieves a list of books, with an optional search query.  
-   - **Query Params**:  `searchedTitle` (optional)
+2. **List Books**
 
-3. **Get Book Details**  
-   - **Method**: `GET /api/books/:id`  
-   - **Description**: Retrieves detailed information about a specific book.  
+   - **Method**: `GET /api/books/list`
+   - **Description**: Retrieves a list of books, with an optional search query.
+   - **Query Params**: `searchedTitle` (optional)
+
+3. **Get Book Details**
+
+   - **Method**: `GET /api/books/:id`
+   - **Description**: Retrieves detailed information about a specific book.
    - **Params**: `id` (as part of URL path)
 
-4. **Borrow Book**  
-   - **Method**: `POST /api/books/borrow`  
-   - **Description**: Marks a book as borrowed by a user.  
-   - **Request Body**:  
+4. **Borrow Book**
+
+   - **Method**: `POST /api/books/borrow`
+   - **Description**: Marks a book as borrowed by a user.
+   - **Request Body**:
      ```json
      { "userId": "ObjectId", "bookId": "ObjectId" }
      ```
 
-5. **Return Book**  
-   - **Method**: `POST /api/books/return`  
-   - **Description**: Marks a book as returned by the user.  
-   - **Request Body**:  
+5. **Return Book**
+
+   - **Method**: `POST /api/books/return`
+   - **Description**: Marks a book as returned by the user.
+   - **Request Body**:
      ```json
      { "userId": "ObjectId", "bookId": "ObjectId" }
      ```
 
-6. **Get User Borrowing Records**  
-   - **Method**: `GET /api/books/borrowings/:userId`  
-   - **Description**: Retrieves borrowing records of a specific user.  
+6. **Get User Borrowing Records**
+   - **Method**: `GET /api/books/borrowings/:userId`
+   - **Description**: Retrieves borrowing records of a specific user.
    - **Params**: `userId` (as part of URL path)
 
 ## Database Schema
 
 ### User Schema
+
 - **name**: `String` (required)  
   The name of the user.
 
@@ -188,6 +197,7 @@ Welcome to the Library Borrowing System! This project is designed to help users 
   The date and time when the user account was created. Defaults to the current date and time.
 
 ### Book Schema
+
 - **title**: `String` (required)  
   The title of the book.
 
@@ -211,6 +221,7 @@ Welcome to the Library Borrowing System! This project is designed to help users 
 
 - **imageLinks**: `Object`  
   Contains links to images for the book's cover.
+
   - **smallThumbnail**: `String` (required)  
     URL to the small-sized thumbnail of the book cover.
   - **thumbnail**: `String` (required)  
@@ -225,4 +236,3 @@ Welcome to the Library Borrowing System! This project is designed to help users 
     Indicates whether the book has been returned or not.
   - **borrower**: `User Object ID` (default: null)  
     Refers to the user who has currently borrowed the book. If null, the book is available for borrowing.
-    
