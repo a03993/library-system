@@ -31,11 +31,11 @@ Welcome to the Library Borrowing System! This project is designed to help users 
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/a03993/mingliu-library-system.git
+   git clone https://github.com/a03993/library-system.git
    ```
 2. **Navigate to the server directory**:
    ```bash
-   cd mingliu-library-system/server
+   cd library-system/server
    ```
 3. **Set up your environment variables**:
    ```bash
